@@ -1,5 +1,4 @@
 import Ico from "./Ico";
-import { LogoMark } from "./Logo";
 
 export default function Hero() {
   return (
