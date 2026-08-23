@@ -70,46 +70,40 @@ export default function About() {
             </div>
           </div>
 
-          <div className="about-stats" data-reveal>
-            <div className="stat-card">
-              <div className="stat-num">4.4★</div>
-              <div className="stat-label">Justdial Rating · ~330 Ratings</div>
+          <div className="about-visual" data-reveal>
+            <div className="about-photo-stack">
+              <img
+                src="/photos/brand-wall.jpg"
+                alt="Gold Dozo Gym branded wall with illuminated signage"
+                className="about-photo about-photo-main"
+              />
+              <img
+                src="/photos/reception.jpg"
+                alt="Gold Dozo Gym reception and lobby area"
+                className="about-photo about-photo-secondary"
+              />
             </div>
-            <div className="stat-card">
-              <div className="stat-num">445+</div>
-              <div className="stat-label">Reviews Across Platforms</div>
-            </div>
-            <div className="stat-card">
-              <div className="stat-num">10+</div>
-              <div className="stat-label">Training Formats & Classes</div>
-            </div>
-            <div className="stat-card">
-              <div className="stat-num">16½</div>
-              <div className="stat-label">Hours Open Every Day</div>
-            </div>
-            <div className="stat-card stat-wide">
-              <div>
-                <div className="stat-num">801503</div>
-                <div className="stat-label">Bailey Road · Gola Road Crossing · Patna</div>
+            <div className="about-stats">
+              <div className="stat-card">
+                <div className="stat-num">4.4★</div>
+                <div className="stat-label">Justdial · ~330 Ratings</div>
               </div>
-              <LogoMarkBig />
+              <div className="stat-card">
+                <div className="stat-num">445+</div>
+                <div className="stat-label">Reviews Across Platforms</div>
+              </div>
+              <div className="stat-card">
+                <div className="stat-num">10+</div>
+                <div className="stat-label">Training Formats</div>
+              </div>
+              <div className="stat-card">
+                <div className="stat-num">4th</div>
+                <div className="stat-label">Floor · Bhavya Iconic Tower</div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </section>
-  );
-}
-
-function LogoMarkBig() {
-  return (
-    <svg width="86" height="72" viewBox="0 0 72 60" fill="none" aria-hidden="true">
-      <g stroke="#ED1C24" strokeWidth="7" strokeLinecap="butt">
-        <path d="M8.5 56V32A27.5 27.5 0 0 1 63.5 32V56" />
-        <path d="M16.5 56V32A19.5 19.5 0 0 1 55.5 32V56" />
-        <path d="M24.5 56V32A11.5 11.5 0 0 1 47.5 32V56" />
-        <path d="M40 56V34a6 6 0 0 0-12 0v12" />
-      </g>
-    </svg>
   );
 }

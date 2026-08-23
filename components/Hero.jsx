@@ -4,20 +4,12 @@ import { LogoMark } from "./Logo";
 export default function Hero() {
   return (
     <section className="hero" id="top">
-      <div className="hero-grid-lines" />
       <div
-        style={{
-          position: "absolute",
-          right: "-60px",
-          top: "50%",
-          transform: "translateY(-50%) rotate(8deg)",
-          opacity: 0.14,
-          pointerEvents: "none",
-        }}
-        aria-hidden="true"
-      >
-        <LogoMark size={520} color="#ED1C24" />
-      </div>
+        className="hero-bg"
+        style={{ backgroundImage: "url(/photos/gym-floor.jpg)" }}
+      />
+      <div className="hero-overlay" />
+      <div className="hero-grid-lines" />
 
       <div className="container hero-inner">
         <span className="eyebrow">Patna&rsquo;s Premium Fitness Destination</span>

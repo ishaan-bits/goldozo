@@ -25,7 +25,7 @@ export default function Footer() {
         <div className="footer-grid">
           <div className="footer-brand">
             <a href="#top" aria-label="Gold Dozo Gym home">
-              <Logo markSize={38} />
+              <img src="/logo-horizontal.png" alt="Gold Dozo Gym" height={40} />
             </a>
             <p>
               Patna&rsquo;s premium full-service fitness centre — strength
