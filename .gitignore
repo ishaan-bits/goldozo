@@ -6,3 +6,5 @@ out
 SESSION.txt
 Screenshot*
 .env.local
+.vercel
+.env*
