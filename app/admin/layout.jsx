@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { useRouter, usePathname } from "next/navigation";
+import { ContentProvider } from "@/components/ContentProvider";
 
 export default function AdminLayout({ children }) {
   const [user, setUser] = useState(null);
@@ -44,7 +45,7 @@ export default function AdminLayout({ children }) {
         </nav>
         <button className="admin-logout" onClick={() => signOut(auth)}>Logout</button>
       </header>
-      <main className="admin-main">{children}</main>
+      <main className="admin-main"><ContentProvider>{children}</ContentProvider></main>
     </div>
   );
 }
