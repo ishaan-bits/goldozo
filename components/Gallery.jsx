@@ -1,3 +1,7 @@
+"use client";
+
+import { useContent } from "@/components/ContentProvider";
+
 const photos = [
   { src: "/photos/gym-floor.jpg", alt: "Gold Dozo Gym main floor with cardio and free weights", caption: "Main Training Floor", span: "wide" },
   { src: "/photos/brand-wall.jpg", alt: "Illuminated Gold Dozo Gym wall with framed photos", caption: "Gold Dozo Wall", span: "tall" },
@@ -8,16 +12,19 @@ const photos = [
 ];
 
 export default function Gallery() {
+  const { content } = useContent();
+  const c = content.gallery;
+
   return (
     <section className="section section-dark" id="gallery">
       <div className="container">
         <div className="section-head" style={{ textAlign: "center" }} data-reveal>
-          <span className="kicker" style={{ justifyContent: "center" }}>Inside Gold Dozo</span>
+          <span className="kicker" style={{ justifyContent: "center" }}>{c.kicker}</span>
           <h2 className="section-title display">
-            Step Inside <span className="red">The Gym</span>
+            {c.heading} <span className="red">{c.headingRed}</span>
           </h2>
           <p className="section-desc" style={{ marginInline: "auto" }}>
-            4th floor of Bhavya Iconic Tower — where dark industrial design meets premium training.
+            {c.description}
           </p>
         </div>
 

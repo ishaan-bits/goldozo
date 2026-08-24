@@ -5,3 +5,4 @@ out
 *.log
 SESSION.txt
 Screenshot*
+.env.local

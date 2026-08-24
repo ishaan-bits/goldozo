@@ -1,93 +1,68 @@
+"use client";
+
 import Ico from "./Ico";
+import { useContent } from "@/components/ContentProvider";
 
-const hours = [
-  ["Mon–Sat", "5:30 AM – 10:00 PM"],
-  ["Sunday", "Varies — call ahead"],
-];
+const contactIcons = ["phone", "phone", "globe", "pin"];
 
-const contacts = [
-  {
-    ico: "phone",
-    href: "tel:+917070259222",
-    label: "Primary",
-    value: "+91 70702 59222",
-  },
-  {
-    ico: "phone",
-    href: "tel:+916123507056",
-    label: "Landline",
-    value: "0612-350 7056",
-  },
-  {
-    ico: "globe",
-    href: "https://golddozo.com",
-    label: "Website",
-    value: "golddozo.com",
-  },
-  {
-    ico: "pin",
-    label: "Address",
-    value: "4th Floor, Bhavya Iconic Tower, Gola Road Crossing, Bailey Road, Patna, Bihar 801503",
-  },
-];
-
-const areas = [
-  "Gola Road",
-  "Bailey Road",
-  "Danapur",
-  "Ram Jaipal Nagar",
-  "Shri Krishna Puram",
-  "Indrapuri",
-];
+function getContactHref(label, value) {
+  if (label === "Primary") return `tel:${value.replace(/\s/g, "")}`;
+  if (label === "Landline") return `tel:${value.replace(/\s/g, "")}`;
+  if (label === "Website") return `https://${value}`;
+  return undefined;
+}
 
 export default function Visit() {
+  const { content } = useContent();
+  const c = content.visit;
+
   return (
     <section className="section section-dark" id="visit">
       <div className="container">
         <div className="section-head" data-reveal>
-          <span className="kicker">Visit Us</span>
+          <span className="kicker">{c.kicker}</span>
           <h2 className="section-title display">
-            Find Us On <span className="red">Bailey Road</span>
+            {c.heading} <span className="red">{c.headingRed}</span>
           </h2>
-          <p className="section-desc">
-            Conveniently located at Gola Road Crossing — easy to reach from
-            Danapur, Ram Jaipal Nagar, Shri Krishna Puram and Indrapuri.
-          </p>
+          <p className="section-desc">{c.description}</p>
         </div>
 
         <div className="visit-grid">
           <div data-reveal>
             <div className="hours-table">
-              {hours.map(([day, time]) => (
-                <div className="hours-row" key={day}>
-                  <span className="hours-day">{day}</span>
-                  <span className={`hours-time ${day === "Sunday" ? "warn" : ""}`}>
-                    {time}
+              {(c.hours || []).map((h) => (
+                <div className="hours-row" key={h.day}>
+                  <span className="hours-day">{h.day}</span>
+                  <span className={`hours-time ${h.day === "Sunday" ? "warn" : ""}`}>
+                    {h.time}
                   </span>
                 </div>
               ))}
             </div>
 
             <div className="contact-lines">
-              {contacts.map((c) => (
-                <a
-                  key={c.label}
-                  href={c.href || "#"}
-                  className="contact-line"
-                  target={c.href ? "_blank" : undefined}
-                  rel={c.href ? "noopener noreferrer" : undefined}
-                >
-                  <Ico name={c.ico} size={20} />
-                  <div>
-                    <span>{c.label}</span>
-                    {c.value}
-                  </div>
-                </a>
-              ))}
+              {(c.contacts || []).map((ct, i) => {
+                const href = getContactHref(ct.label, ct.value);
+                return (
+                  <a
+                    key={ct.label}
+                    href={href || "#"}
+                    className="contact-line"
+                    target={href ? "_blank" : undefined}
+                    rel={href ? "noopener noreferrer" : undefined}
+                  >
+                    <Ico name={contactIcons[i] || "pin"} size={20} />
+                    <div>
+                      <span>{ct.label}</span>
+                      {ct.value}
+                    </div>
+                  </a>
+                );
+              })}
             </div>
 
             <div className="area-chips">
-              {areas.map((a) => (
+              {(c.areas || []).map((a) => (
                 <span className="chip" key={a}>
                   {a}
                 </span>

@@ -9,12 +9,14 @@ import Pricing from "@/components/Pricing";
 import Reviews from "@/components/Reviews";
 import Visit from "@/components/Visit";
 import CTABand from "@/components/CTABand";
+import EnquiryForm from "@/components/EnquiryForm";
 import Footer from "@/components/Footer";
 import ScrollReveal from "@/components/ScrollReveal";
+import { ContentProvider } from "@/components/ContentProvider";
 
 export default function Home() {
   return (
-    <>
+    <ContentProvider>
       <ScrollReveal />
       <Navbar />
       <Hero />
@@ -27,8 +29,9 @@ export default function Home() {
       <Pricing />
       <Reviews />
       <Visit />
+      <EnquiryForm />
       <CTABand />
       <Footer />
-    </>
+    </ContentProvider>
   );
 }

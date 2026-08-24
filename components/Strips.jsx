@@ -1,6 +1,12 @@
+"use client";
+
 import Ico from "./Ico";
+import { useContent } from "@/components/ContentProvider";
 
 export function InfoStrip() {
+  const { content } = useContent();
+  const c = content.strips;
+
   return (
     <div className="strip">
       <div className="container strip-inner">
@@ -9,8 +15,8 @@ export function InfoStrip() {
             <Ico name="pin" size={22} />
           </span>
           <div>
-            <h4>Bhavya Iconic Tower, 4th Floor</h4>
-            <p>Gola Road Crossing, Bailey Road, Patna — 801503</p>
+            <h4>{c.address}</h4>
+            <p>{c.addressDetail}</p>
           </div>
         </div>
         <div className="strip-item">
@@ -18,8 +24,8 @@ export function InfoStrip() {
             <Ico name="clock" size={22} />
           </span>
           <div>
-            <h4>Open 6 Days · 5:30 AM – 10 PM</h4>
-            <p>Sunday hours vary — please call before visiting</p>
+            <h4>{c.hours}</h4>
+            <p>{c.hoursDetail}</p>
           </div>
         </div>
         <div className="strip-item">
@@ -27,8 +33,8 @@ export function InfoStrip() {
             <Ico name="phone" size={20} />
           </span>
           <div>
-            <h4>+91 70702 59222</h4>
-            <p>Landline: 0612-350 7056</p>
+            <h4>{c.phone}</h4>
+            <p>{c.phoneDetail}</p>
           </div>
         </div>
       </div>
@@ -36,19 +42,9 @@ export function InfoStrip() {
   );
 }
 
-const items = [
-  "Strength & Cardio",
-  "Boxing",
-  "Yoga",
-  "Zumba",
-  "Pilates",
-  "Calisthenics",
-  "Functional Training",
-  "Steam & Sauna",
-  "Nutrition Café",
-];
-
 export function Marquee() {
+  const { content } = useContent();
+  const items = content.marquee || [];
   const row = [...items, ...items];
   return (
     <div className="marquee" aria-hidden="true">

@@ -1,6 +1,12 @@
+"use client";
+
 import Ico from "./Ico";
+import { useContent } from "@/components/ContentProvider";
 
 export default function Hero() {
+  const { content } = useContent();
+  const c = content.hero;
+
   return (
     <section className="hero" id="top">
       <div
@@ -11,43 +17,39 @@ export default function Hero() {
       <div className="hero-grid-lines" />
 
       <div className="container hero-inner">
-        <span className="eyebrow">Patna&rsquo;s Premium Fitness Destination</span>
+        <span className="eyebrow">{c.eyebrow}</span>
 
         <h1 className="display">
-          Train Hard.
+          {c.headingLine1}
           <br />
-          Live <em className="outline-text">Gold.</em>
+          {c.headingLine2.split("Gold")[0]}<em className="outline-text">Gold</em>{c.headingLine2.split("Gold")[1] || "."}
         </h1>
 
-        <p className="hero-sub">
-          Gold Dozo Gym is a full-service fitness centre on Bailey Road —
-          spacious modern floors, top-tier equipment, expert coaches and
-          recovery amenities like steam, sauna and an in-house nutrition café.
-        </p>
+        <p className="hero-sub">{c.description}</p>
 
         <div className="hero-actions">
           <a className="btn btn-red" href="tel:+917070259222">
-            Book a Free Trial <Ico name="arrow" size={18} />
+            {c.ctaPrimary} <Ico name="arrow" size={18} />
           </a>
           <a className="btn btn-ghost" href="#membership">
-            View Membership
+            {c.ctaSecondary}
           </a>
         </div>
 
         <div className="hero-badges">
           <span className="badge">
-            <Ico name="star" size={15} /> 4.4 / 5 · Justdial (~330 ratings)
+            <Ico name="star" size={15} /> {c.rating1}
           </span>
           <span className="badge">
-            <Ico name="star" size={15} /> 4.8 / 5 · Yappe (115 reviews)
+            <Ico name="star" size={15} /> {c.rating2}
           </span>
           <span className="badge">
-            <Ico name="clock" size={15} /> Mon–Sat · 5:30 AM – 10 PM
+            <Ico name="clock" size={15} /> {c.hours}
           </span>
         </div>
       </div>
 
-      <div className="scroll-hint">Scroll</div>
+      <div className="scroll-hint">{c.scrollHint}</div>
     </section>
   );
 }

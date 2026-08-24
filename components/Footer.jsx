@@ -1,4 +1,7 @@
+"use client";
+
 import Logo from "./Logo";
+import { useContent } from "@/components/ContentProvider";
 
 const explore = [
   ["About", "#about"],
@@ -19,6 +22,9 @@ const classLinks = [
 ];
 
 export default function Footer() {
+  const { content } = useContent();
+  const c = content.footer;
+
   return (
     <footer className="footer">
       <div className="container">
@@ -27,11 +33,7 @@ export default function Footer() {
             <a href="#top" aria-label="Gold Dozo Gym home">
               <img src="/logo-horizontal.png" alt="Gold Dozo Gym" height={40} />
             </a>
-            <p>
-              Patna&rsquo;s premium full-service fitness centre — strength
-              &amp; cardio, boxing, yoga, zumba, pilates, calisthenics, steam,
-              sauna, and an in-house nutrition café.
-            </p>
+            <p>{c.brandDesc}</p>
           </div>
 
           <div>
@@ -62,29 +64,28 @@ export default function Footer() {
               <div>
                 <b>Phone:</b>{" "}
                 <a href="tel:+917070259222" style={{ color: "#ff3b41" }}>
-                  +91 70702 59222
+                  {c.phone}
                 </a>
               </div>
               <div>
                 <b>Landline:</b>{" "}
                 <a href="tel:+916123507056" style={{ color: "#c9c9d1" }}>
-                  0612-350 7056
+                  {c.landline}
                 </a>
               </div>
               <div>
                 <b>Website:</b>{" "}
                 <a
-                  href="https://golddozo.com"
+                  href={`https://${c.website}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{ color: "#c9c9d1" }}
                 >
-                  golddozo.com
+                  {c.website}
                 </a>
               </div>
               <div>
-                <b>Address:</b> 4th Floor, Bhavya Iconic Tower, Gola Road
-                Crossing, Bailey Road, Patna, Bihar 801503
+                <b>Address:</b> {c.address}
               </div>
             </div>
           </div>
@@ -92,7 +93,7 @@ export default function Footer() {
 
         <div className="footer-bottom">
           <span>
-            © {new Date().getFullYear()} Gold Dozo Gym · Bailey Road, Patna
+            {c.copyright.replace("{year}", new Date().getFullYear())}
           </span>
           <span>
             Listed on{" "}
@@ -105,11 +106,11 @@ export default function Footer() {
             </a>{" "}
             ·{" "}
             <a
-              href="https://golddozo.com"
+              href={`https://${c.website}`}
               target="_blank"
               rel="noopener noreferrer"
             >
-              golddozo.com
+              {c.website}
             </a>
           </span>
         </div>

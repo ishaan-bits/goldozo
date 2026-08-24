@@ -1,20 +1,22 @@
+"use client";
+
 import Ico from "./Ico";
+import { useContent } from "@/components/ContentProvider";
 
 export default function CTABand() {
+  const { content } = useContent();
+  const c = content.cta;
+
   return (
     <section className="cta-band">
       <div className="container">
         <h2 className="display" data-reveal>
-          Your First Rep <br />
-          Starts Here
+          {c.heading}
         </h2>
-        <p data-reveal>
-          Walk in for a free trial. No commitment, no pressure — just Gold
-          Dozo and the equipment to prove it.
-        </p>
+        <p data-reveal>{c.description}</p>
         <div style={{ display: "flex", flexWrap: "wrap", gap: 16, justifyContent: "center" }} data-reveal>
           <a className="btn btn-light" href="tel:+917070259222">
-            <Ico name="phone" size={18} /> Call +91 70702 59222
+            <Ico name="phone" size={18} /> {c.cta1}
           </a>
           <a
             className="btn btn-outline"
@@ -22,7 +24,7 @@ export default function CTABand() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Ico name="pin" size={18} /> Get Directions
+            <Ico name="pin" size={18} /> {c.cta2}
           </a>
         </div>
       </div>
