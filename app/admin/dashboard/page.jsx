@@ -1,8 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { collection, getDocs, doc, updateDoc, deleteDoc, orderBy, query } from "firebase/firestore";
-import { getFirebaseDB } from "@/lib/firebase";
 
 export default function AdminDashboard() {
   const [leads, setLeads] = useState([]);
@@ -11,11 +9,9 @@ export default function AdminDashboard() {
 
   const fetchLeads = async () => {
     try {
-      const db = getFirebaseDB();
-      if (!db) return;
-      const q = query(collection(db, "leads"), orderBy("createdAt", "desc"));
-      const snap = await getDocs(q);
-      setLeads(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
+      const res = await fetch("/api/leads");
+      const data = await res.json();
+      if (Array.isArray(data)) setLeads(data);
     } catch (e) {
       console.error(e);
     }
@@ -25,17 +21,21 @@ export default function AdminDashboard() {
   useEffect(() => { fetchLeads(); }, []);
 
   const updateStatus = async (id, status) => {
-    const db = getFirebaseDB();
-    if (!db) return;
-    await updateDoc(doc(db, "leads", id), { status });
+    await fetch("/api/leads", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id, status }),
+    });
     setLeads((prev) => prev.map((l) => (l.id === id ? { ...l, status } : l)));
   };
 
   const deleteLead = async (id) => {
     if (!confirm("Delete this lead?")) return;
-    const db = getFirebaseDB();
-    if (!db) return;
-    await deleteDoc(doc(db, "leads", id));
+    await fetch("/api/leads", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id }),
+    });
     setLeads((prev) => prev.filter((l) => l.id !== id));
   };
 
@@ -87,7 +87,7 @@ export default function AdminDashboard() {
                   <td><a href={`tel:${lead.phone}`}>{lead.phone}</a></td>
                   <td>{lead.email || "—"}</td>
                   <td className="lead-msg">{lead.message || "—"}</td>
-                  <td>{lead.createdAt?.toDate ? lead.createdAt.toDate().toLocaleDateString("en-IN") : "—"}</td>
+                  <td>{lead.createdAt ? new Date(lead.createdAt).toLocaleDateString("en-IN") : "—"}</td>
                   <td>
                     <select className={`lead-status lead-status-${lead.status}`} value={lead.status} onChange={(e) => updateStatus(lead.id, e.target.value)}>
                       <option value="new">New</option>

@@ -1,8 +1,6 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { doc, getDoc, setDoc } from "firebase/firestore";
-import { getFirebaseDB } from "@/lib/firebase";
 import { defaultContent } from "@/lib/content-defaults";
 
 const ContentContext = createContext(null);
@@ -14,12 +12,10 @@ export function ContentProvider({ children }) {
   useEffect(() => {
     (async () => {
       try {
-        const db = getFirebaseDB();
-        if (!db) return;
-        const ref = doc(db, "settings", "content");
-        const snap = await getDoc(ref);
-        if (snap.exists()) {
-          setContent((prev) => deepMerge(prev, snap.data()));
+        const res = await fetch("/api/content");
+        const data = await res.json();
+        if (data && typeof data === "object") {
+          setContent((prev) => deepMerge(prev, data));
         }
       } catch (e) {
         console.warn("Using default content:", e.message);
@@ -38,18 +34,19 @@ export function ContentProvider({ children }) {
     }
     obj[keys[keys.length - 1]] = value;
     setContent(updated);
-    try {
-      const db = getFirebaseDB();
-      if (!db) return;
-      const ref = doc(db, "settings", "content");
-      await setDoc(ref, toRaw(updated), { merge: true });
-    } catch (e) {
-      console.error("Failed to save:", e.message);
-    }
+  };
+
+  const saveContent = async () => {
+    const res = await fetch("/api/content", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(content),
+    });
+    if (!res.ok) throw new Error("Failed to save");
   };
 
   return (
-    <ContentContext.Provider value={{ content, loading, updateContent }}>
+    <ContentContext.Provider value={{ content, loading, updateContent, saveContent }}>
       {children}
     </ContentContext.Provider>
   );
@@ -78,14 +75,4 @@ function deepMerge(target, source) {
     }
   }
   return result;
-}
-
-function toRaw(obj) {
-  if (obj === null || typeof obj !== "object") return obj;
-  if (Array.isArray(obj)) return obj.map(toRaw);
-  const raw = {};
-  for (const [k, v] of Object.entries(obj)) {
-    raw[k] = toRaw(v);
-  }
-  return raw;
 }

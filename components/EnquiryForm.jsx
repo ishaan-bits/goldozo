@@ -1,8 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-import { getFirebaseDB } from "@/lib/firebase";
 import { useContent } from "@/components/ContentProvider";
 
 export default function EnquiryForm() {
@@ -22,14 +20,12 @@ export default function EnquiryForm() {
     }
     setSubmitting(true);
     try {
-      const db = getFirebaseDB();
-      if (!db) throw new Error("Firebase not initialized");
-      await addDoc(collection(db, "leads"), {
-        ...form,
-        createdAt: serverTimestamp(),
-        source: "website",
-        status: "new",
+      const res = await fetch("/api/enquiry", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
       });
+      if (!res.ok) throw new Error("Failed");
       setStatus({ ok: true, msg: c.successMessage || "Thank you! We'll contact you soon." });
       setForm({ name: "", phone: "", email: "", message: "" });
     } catch (err) {

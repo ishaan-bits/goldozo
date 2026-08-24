@@ -1,8 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { doc, setDoc } from "firebase/firestore";
-import { getFirebaseDB } from "@/lib/firebase";
 import { useContent } from "@/components/ContentProvider";
 import { defaultContent } from "@/lib/content-defaults";
 
@@ -22,7 +20,7 @@ const sections = [
 ];
 
 export default function ContentEditor() {
-  const { content, updateContent } = useContent();
+  const { content, updateContent, saveContent } = useContent();
   const [active, setActive] = useState("hero");
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -34,10 +32,7 @@ export default function ContentEditor() {
   const handleSave = async () => {
     setSaving(true);
     try {
-      const db = getFirebaseDB();
-      if (!db) throw new Error("Firebase not initialized");
-      const ref = doc(db, "settings", "content");
-      await setDoc(ref, content, { merge: true });
+      await saveContent();
       setSaved(true);
       setTimeout(() => setSaved(false), 2000);
     } catch (e) {
@@ -49,10 +44,12 @@ export default function ContentEditor() {
   const handleReset = async () => {
     if (!confirm("Reset all content to defaults? This cannot be undone.")) return;
     try {
-      const db = getFirebaseDB();
-      if (!db) throw new Error("Firebase not initialized");
-      const ref = doc(db, "settings", "content");
-      await setDoc(ref, defaultContent, { merge: true });
+      const res = await fetch("/api/content", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(defaultContent),
+      });
+      if (!res.ok) throw new Error("Failed to reset");
       window.location.reload();
     } catch (e) {
       alert("Failed to reset: " + e.message);

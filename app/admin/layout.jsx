@@ -11,17 +11,26 @@ export default function AdminLayout({ children }) {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const pathname = usePathname();
+  const isLoginPage = pathname === "/admin";
 
   useEffect(() => {
-    const a = getFirebaseAuth();
-    if (!a) return;
-    const unsub = onAuthStateChanged(a, (u) => {
-      setUser(u);
+    let unsub;
+    try {
+      const a = getFirebaseAuth();
+      if (!a) {
+        setLoading(false);
+        return;
+      }
+      unsub = onAuthStateChanged(a, (u) => {
+        setUser(u);
+        setLoading(false);
+        if (!u && !isLoginPage) router.push("/admin");
+      });
+    } catch {
       setLoading(false);
-      if (!u && pathname !== "/admin") router.push("/admin");
-    });
-    return unsub;
-  }, [router, pathname]);
+    }
+    return () => unsub && unsub();
+  }, [router, isLoginPage]);
 
   if (loading) {
     return (
@@ -31,7 +40,7 @@ export default function AdminLayout({ children }) {
     );
   }
 
-  if (!user) return children;
+  if (isLoginPage || !user) return children;
 
   return (
     <div className="admin-shell">
