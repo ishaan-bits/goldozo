@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import { auth } from "@/lib/firebase";
+import { getFirebaseAuth } from "@/lib/firebase";
 import { useRouter, usePathname } from "next/navigation";
 import { ContentProvider } from "@/components/ContentProvider";
 
@@ -13,7 +13,9 @@ export default function AdminLayout({ children }) {
   const pathname = usePathname();
 
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, (u) => {
+    const a = getFirebaseAuth();
+    if (!a) return;
+    const unsub = onAuthStateChanged(a, (u) => {
       setUser(u);
       setLoading(false);
       if (!u && pathname !== "/admin") router.push("/admin");
@@ -43,7 +45,7 @@ export default function AdminLayout({ children }) {
           <a href="/admin/dashboard/leads" className={pathname.includes("/leads") ? "active" : ""}>Leads</a>
           <a href="/admin/dashboard/content" className={pathname.includes("/content") ? "active" : ""}>Content</a>
         </nav>
-        <button className="admin-logout" onClick={() => signOut(auth)}>Logout</button>
+        <button className="admin-logout" onClick={() => { const a = getFirebaseAuth(); if (a) signOut(a); }}>Logout</button>
       </header>
       <main className="admin-main"><ContentProvider>{children}</ContentProvider></main>
     </div>

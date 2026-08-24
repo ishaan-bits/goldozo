@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { getFirebaseDB } from "@/lib/firebase";
 import { useContent } from "@/components/ContentProvider";
 
 export default function EnquiryForm() {
@@ -22,6 +22,8 @@ export default function EnquiryForm() {
     }
     setSubmitting(true);
     try {
+      const db = getFirebaseDB();
+      if (!db) throw new Error("Firebase not initialized");
       await addDoc(collection(db, "leads"), {
         ...form,
         createdAt: serverTimestamp(),

@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 import { doc, getDoc, setDoc } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { getFirebaseDB } from "@/lib/firebase";
 import { defaultContent } from "@/lib/content-defaults";
 
 const ContentContext = createContext(null);
@@ -14,6 +14,8 @@ export function ContentProvider({ children }) {
   useEffect(() => {
     (async () => {
       try {
+        const db = getFirebaseDB();
+        if (!db) return;
         const ref = doc(db, "settings", "content");
         const snap = await getDoc(ref);
         if (snap.exists()) {
@@ -37,6 +39,8 @@ export function ContentProvider({ children }) {
     obj[keys[keys.length - 1]] = value;
     setContent(updated);
     try {
+      const db = getFirebaseDB();
+      if (!db) return;
       const ref = doc(db, "settings", "content");
       await setDoc(ref, toRaw(updated), { merge: true });
     } catch (e) {

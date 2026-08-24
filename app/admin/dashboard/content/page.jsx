@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { doc, setDoc } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { getFirebaseDB } from "@/lib/firebase";
 import { useContent } from "@/components/ContentProvider";
 import { defaultContent } from "@/lib/content-defaults";
 
@@ -34,6 +34,8 @@ export default function ContentEditor() {
   const handleSave = async () => {
     setSaving(true);
     try {
+      const db = getFirebaseDB();
+      if (!db) throw new Error("Firebase not initialized");
       const ref = doc(db, "settings", "content");
       await setDoc(ref, content, { merge: true });
       setSaved(true);
@@ -47,6 +49,8 @@ export default function ContentEditor() {
   const handleReset = async () => {
     if (!confirm("Reset all content to defaults? This cannot be undone.")) return;
     try {
+      const db = getFirebaseDB();
+      if (!db) throw new Error("Firebase not initialized");
       const ref = doc(db, "settings", "content");
       await setDoc(ref, defaultContent, { merge: true });
       window.location.reload();

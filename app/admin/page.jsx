@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "@/lib/firebase";
+import { getFirebaseAuth } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
 
 export default function AdminLogin() {
@@ -17,7 +17,9 @@ export default function AdminLogin() {
     setError("");
     setLoading(true);
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const a = getFirebaseAuth();
+      if (!a) throw new Error("Firebase not initialized");
+      await signInWithEmailAndPassword(a, email, password);
       router.push("/admin/dashboard");
     } catch (err) {
       setError("Invalid email or password.");
