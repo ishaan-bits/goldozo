@@ -22,7 +22,17 @@ export default function AdminLogin() {
       await signInWithEmailAndPassword(a, email, password);
       router.push("/admin/dashboard");
     } catch (err) {
-      setError("Invalid email or password.");
+      console.error("Login error:", err.code, err.message);
+      const code = err.code;
+      if (code === "auth/invalid-credential" || code === "auth/user-not-found" || code === "auth/wrong-password") {
+        setError("Invalid email or password.");
+      } else if (code === "auth/email-already-in-use") {
+        setError("This email is already registered. Try signing in.");
+      } else if (code === "auth/operation-not-allowed") {
+        setError("Email/Password sign-in is not enabled. Go to Firebase Console → Authentication → Sign-in method → Enable Email/Password.");
+      } else {
+        setError(err.message || "Login failed. Check console for details.");
+      }
     }
     setLoading(false);
   };
