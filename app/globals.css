@@ -510,7 +510,6 @@ ul {
 /* ---------- sections ---------- */
 .section {
   padding: 110px 0;
-  scroll-margin-top: 80px;
 }
 
 .section-dark {
