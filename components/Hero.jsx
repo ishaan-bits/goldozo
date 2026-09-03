@@ -10,24 +10,24 @@ export default function Hero() {
   return (
     <section className="hero" id="top">
       <div
-        className="hero-bg"
+        className="hero-bg hero-bg-anim"
         style={{ backgroundImage: "url(/photos/gym-floor.jpg)" }}
       />
       <div className="hero-overlay" />
       <div className="hero-grid-lines" />
 
       <div className="container hero-inner">
-        <span className="eyebrow">{c.eyebrow}</span>
+        <span className="eyebrow hero-anim anim-1">{c.eyebrow}</span>
 
         <h1 className="display">
-          {c.headingLine1}
+          <span className="hero-anim anim-2">{c.headingLine1}</span>
           <br />
-          {c.headingLine2.split("Gold")[0]}<em className="outline-text">Gold</em>{c.headingLine2.split("Gold")[1] || "."}
+          <span className="hero-anim anim-3">{c.headingLine2.split("Gold")[0]}<em className="outline-text">Gold</em>{c.headingLine2.split("Gold")[1] || "."}</span>
         </h1>
 
-        <p className="hero-sub">{c.description}</p>
+        <p className="hero-sub hero-anim anim-4">{c.description}</p>
 
-        <div className="hero-actions">
+        <div className="hero-actions hero-anim anim-5">
           <a className="btn btn-red" href="tel:+917070259222">
             {c.ctaPrimary} <Ico name="arrow" size={18} />
           </a>
@@ -36,7 +36,7 @@ export default function Hero() {
           </a>
         </div>
 
-        <div className="hero-badges">
+        <div className="hero-badges hero-anim anim-6">
           <span className="badge">
             <Ico name="star" size={15} /> {c.rating1}
           </span>
@@ -49,7 +49,7 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="scroll-hint">{c.scrollHint}</div>
+      <div className="scroll-hint hero-anim anim-7">{c.scrollHint}</div>
     </section>
   );
 }
