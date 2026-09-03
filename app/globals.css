@@ -1570,7 +1570,7 @@ ul {
     grid-row: span 1;
   }
   .hero {
-    padding-top: 130px;
+    padding-top: 100px;
   }
   .score-boxes {
     flex-direction: column;
@@ -1591,6 +1591,7 @@ ul {
   }
   .footer-grid {
     grid-template-columns: 1fr;
+    gap: 28px;
   }
   .footer-grid > div {
     border-bottom: 1px solid var(--line);
@@ -1606,9 +1607,6 @@ ul {
   .section {
     padding: 64px 0;
   }
-  .hero {
-    padding-top: 100px;
-  }
   .hero-badges {
     flex-direction: column;
     align-items: flex-start;
@@ -1621,6 +1619,103 @@ ul {
   }
   .cta-band h2 {
     font-size: clamp(32px, 8vw, 56px);
+  }
+  .container {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .section-head {
+    text-align: center;
+  }
+  .about-copy p {
+    font-size: 15px;
+  }
+  .disclaimer {
+    padding: 24px 18px;
+  }
+  .plan-price small {
+    font-size: 13px;
+  }
+  .nav {
+    padding: 14px 0;
+  }
+  .nav-inner {
+    gap: 12px;
+  }
+  .enquiry-form {
+    padding: 24px 18px;
+  }
+  .about-grid {
+    gap: 32px;
+  }
+  .review-card {
+    padding: 24px 20px;
+  }
+  .amen-note {
+    font-size: 14px;
+    padding: 20px;
+  }
+  .check-chips {
+    gap: 6px;
+  }
+  .chip {
+    font-size: 11px;
+    padding: 5px 10px;
+  }
+  .price-card {
+    padding: 28px 20px;
+  }
+  .plan-list {
+    gap: 10px;
+  }
+  .hero-sub {
+    font-size: 15px;
+  }
+  .footer-bottom {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+    font-size: 13px;
+  }
+  .hero-badges .badge {
+    font-size: 12px;
+  }
+  .point h5 {
+    font-size: 15px;
+  }
+  .point p {
+    font-size: 13px;
+  }
+  .strip-item {
+    padding: 16px 0;
+  }
+  .strip-item h4 {
+    font-size: 15px;
+  }
+  .strip-item p {
+    font-size: 13px;
+  }
+  .hours-table {
+    margin-bottom: 24px;
+  }
+  .area-chips {
+    gap: 6px;
+  }
+  .gallery-caption-text {
+    font-size: 16px;
+  }
+  .cta-band {
+    padding: 64px 0;
+  }
+  .visit-grid {
+    gap: 32px;
+  }
+  .map-actions {
+    gap: 10px;
+  }
+  .map-actions .btn {
+    width: 100%;
+    justify-content: center;
   }
 }
 
