@@ -10,12 +10,24 @@ export default function EnquiryForm() {
   const [status, setStatus] = useState(null);
   const [submitting, setSubmitting] = useState(false);
 
-  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "phone") {
+      const digits = value.replace(/\D/g, "").slice(0, 10);
+      setForm({ ...form, phone: digits });
+    } else {
+      setForm({ ...form, [name]: value });
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.name.trim() || !form.phone.trim()) {
       setStatus({ ok: false, msg: "Name and phone are required." });
+      return;
+    }
+    if (!/^\d{10}$/.test(form.phone)) {
+      setStatus({ ok: false, msg: "Please enter a valid 10-digit phone number." });
       return;
     }
     setSubmitting(true);
@@ -53,7 +65,7 @@ export default function EnquiryForm() {
             </label>
             <label className="enq-label">
               <span>Phone *</span>
-              <input name="phone" type="tel" required placeholder="+91 XXXXX XXXXX" value={form.phone} onChange={handleChange} />
+              <input name="phone" type="tel" inputMode="numeric" pattern="[0-9]*" maxLength={10} required placeholder="10-digit phone number" value={form.phone} onChange={handleChange} />
             </label>
           </div>
           <label className="enq-label">
